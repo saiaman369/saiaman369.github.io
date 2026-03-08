@@ -4,66 +4,149 @@
 <title>Sai Aman Gopisetti</title>
 
 <style>
+
 body {
     font-family: Arial, sans-serif;
-    margin: 40px;
-    background-color: #f7f7f7;
+    margin: 0;
+    background-color: #f5f7fa;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 40px;
+}
+
+header {
+    margin-bottom: 40px;
 }
 
 h1 {
-    color: #222;
+    font-size: 40px;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: #555;
+    font-size: 18px;
+}
+
+nav {
+    margin-top: 20px;
+}
+
+nav a {
+    margin-right: 20px;
+    text-decoration: none;
+    color: #0066cc;
+    font-weight: bold;
 }
 
 .section {
-    margin-top: 30px;
+    margin-top: 60px;
 }
 
-a {
-    color: #0077cc;
+h2 {
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
 }
+
+.project {
+    margin-top: 15px;
+}
+
+.button {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 18px;
+    background-color: #0066cc;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+footer {
+    margin-top: 80px;
+    color: #888;
+    font-size: 14px;
+}
+
 </style>
-
 </head>
 
 <body>
 
-<h1>Sai Aman Gopisetti</h1>
+<div class="container">
 
-<p>
+<header>
+<h1>Sai Aman Gopisetti</h1>
+<p class="subtitle">
 Battery Materials Scientist | Electrochemistry | Energy Storage
 </p>
 
-<div class="section">
+<nav>
+<a href="#about">About</a>
+<a href="#projects">Projects</a>
+<a href="#patent">Patent</a>
+<a href="#contact">Contact</a>
+</nav>
+</header>
+
+<section id="about" class="section">
 <h2>About</h2>
 <p>
 I work on advanced battery materials, electrochemical systems,
-and next-generation energy storage technologies.
+and next-generation energy storage technologies. My research
+focuses on improving battery performance, durability, and
+materials design for future energy systems.
 </p>
+</section>
+
+<section id="projects" class="section">
+<h2>Projects</h2>
+
+<div class="project">
+<b>Graphene-Based Anode Development</b><br>
+Research on graphene-enhanced materials for improved battery
+performance and cycling stability.
 </div>
 
-<div class="section">
+<div class="project">
+<b>Electrochemical Testing & Degradation Analysis</b><br>
+Experimental investigation of battery degradation mechanisms
+and performance optimization.
+</div>
+
+<div class="project">
+<b>Battery Materials Research</b><br>
+Development and characterization of advanced materials for
+energy storage systems.
+</div>
+
+</section>
+
+<section id="patent" class="section">
 <h2>Patent</h2>
 <p>
 Graphene-based energy storage innovation.
-(Details coming soon)
+(Full details and documentation will be added here.)
 </p>
-</div>
+</section>
 
-<div class="section">
-<h2>Projects</h2>
-<ul>
-<li>Graphene-based anode research</li>
-<li>Electrochemical testing and degradation analysis</li>
-<li>Battery material development</li>
-</ul>
-</div>
-
-<div class="section">
+<section id="contact" class="section">
 <h2>Contact</h2>
+
 <p>
 LinkedIn: add later<br>
 Email: add later
 </p>
+
+</section>
+
+<footer>
+© 2026 Sai Aman Gopisetti
+</footer>
+
 </div>
 
 </body>
