@@ -12,17 +12,16 @@
     --bg:        #080808;
     --surface:   #111111;
     --surface2:  #181818;
-    --border:    #242424;
+    --border:    #2A2A2A;
     --accent:    #E8981E;
     --accent-dim:#7A4E0A;
-    --text:      #EFEFEF;
-    --text-mid:  #999999;
-    --text-low:  #555555;
+    --text:      #F0F0F0;
+    --text-mid:  #B0B0B0;
+    --text-low:  #666666;
     --radius:    4px;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
 
   body {
@@ -34,7 +33,16 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ─── NAV ─── */
+  #particle-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.45;
+  }
+
+  /* NAV */
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -44,39 +52,27 @@
     justify-content: space-between;
     padding: 0 48px;
     height: 60px;
-    background: rgba(8,8,8,0.92);
+    background: rgba(8,8,8,0.94);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
   }
-
   .nav-logo {
     font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 18px;
+    font-weight: 700; font-size: 18px;
     letter-spacing: 0.04em;
-    color: var(--text);
-    text-decoration: none;
+    color: var(--text); text-decoration: none;
   }
-
-  .nav-links {
-    display: flex;
-    gap: 32px;
-    list-style: none;
-  }
-
+  .nav-links { display: flex; gap: 32px; list-style: none; }
   .nav-links a {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.08em;
+    font-size: 12px; letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--text-mid);
-    text-decoration: none;
+    color: var(--text-mid); text-decoration: none;
     transition: color 0.2s;
   }
-
   .nav-links a:hover { color: var(--accent); }
 
-  /* ─── HERO ─── */
+  /* HERO */
   #hero {
     min-height: 100vh;
     display: grid;
@@ -86,912 +82,472 @@
     max-width: 1200px;
     margin: 0 auto;
     gap: 80px;
+    position: relative; z-index: 1;
   }
-
-  .hero-text { }
-
+  .hero-text { position: relative; z-index: 1; }
   .hero-tag {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--accent);
+    font-size: 11px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent);
     margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    display: flex; align-items: center; gap: 10px;
   }
-
   .hero-tag::before {
-    content: '';
-    display: block;
-    width: 32px;
-    height: 1px;
-    background: var(--accent);
+    content: ''; display: block;
+    width: 32px; height: 1px; background: var(--accent);
   }
-
   h1 {
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 800;
     font-size: clamp(56px, 6vw, 88px);
-    line-height: 0.95;
-    letter-spacing: -0.01em;
-    color: var(--text);
-    margin-bottom: 28px;
+    line-height: 0.95; letter-spacing: -0.01em;
+    color: var(--text); margin-bottom: 28px;
   }
-
   h1 span { color: var(--accent); }
-
   .hero-statement {
-    font-size: 18px;
-    font-weight: 300;
-    line-height: 1.65;
-    color: #CCCCCC;
+    font-size: 18px; font-weight: 300;
+    line-height: 1.65; color: #D8D8D8;
     margin-bottom: 36px;
-    max-width: 500px;
+    max-width: 500px; min-height: 72px;
   }
-
-  .hero-statement strong {
-    color: var(--text);
-    font-weight: 500;
+  .hero-statement strong { color: var(--text); font-weight: 500; }
+  .typed-cursor {
+    display: inline-block; width: 2px; height: 1.1em;
+    background: var(--accent); margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: blink 0.8s step-end infinite;
   }
-
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
   .patent-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
+    display: inline-flex; align-items: center; gap: 10px;
     background: rgba(232,152,30,0.08);
     border: 1px solid var(--accent-dim);
     border-radius: var(--radius);
-    padding: 10px 16px;
-    margin-bottom: 36px;
+    padding: 10px 16px; margin-bottom: 36px;
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    color: var(--accent);
-    letter-spacing: 0.04em;
+    font-size: 12px; color: var(--accent); letter-spacing: 0.04em;
   }
-
-  .patent-badge .icon {
-    font-size: 16px;
-  }
-
-  .hero-ctas {
-    display: flex;
-    gap: 14px;
-    flex-wrap: wrap;
-  }
-
+  .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
   .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--accent);
-    color: #000;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent); color: #000;
     padding: 12px 24px;
     font-family: 'IBM Plex Sans', sans-serif;
-    font-weight: 600;
-    font-size: 14px;
-    letter-spacing: 0.02em;
-    text-decoration: none;
-    border-radius: var(--radius);
+    font-weight: 600; font-size: 14px; letter-spacing: 0.02em;
+    text-decoration: none; border-radius: var(--radius);
     transition: background 0.2s, transform 0.15s;
   }
-
   .btn-primary:hover { background: #F5A832; transform: translateY(-1px); }
-
   .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: transparent;
-    color: var(--text);
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; color: var(--text);
     padding: 12px 24px;
     font-family: 'IBM Plex Sans', sans-serif;
-    font-weight: 500;
-    font-size: 14px;
-    letter-spacing: 0.02em;
+    font-weight: 500; font-size: 14px; letter-spacing: 0.02em;
     text-decoration: none;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
+    border: 1px solid var(--border); border-radius: var(--radius);
     transition: border-color 0.2s, color 0.2s, transform 0.15s;
   }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
 
-  .btn-secondary:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    transform: translateY(-1px);
-  }
-
-  /* Hero visual — abstract cell diagram */
   .hero-visual {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; z-index: 1;
+  }
+  .hero-photo {
+    width: 340px; height: 400px;
+    object-fit: cover; object-position: center top;
+    border-radius: 8px; border: 1px solid var(--border);
+    filter: grayscale(15%);
+    box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(232,152,30,0.1);
+    transition: filter 0.3s; display: block;
+  }
+  .hero-photo:hover { filter: grayscale(0%); }
+  .hero-photo-accent {
+    position: absolute; bottom: -16px; right: -16px;
+    width: 100px; height: 100px;
+    border: 2px solid var(--accent); border-radius: 4px;
+    opacity: 0.25; pointer-events: none;
   }
 
-  .cell-diagram {
-    width: 320px;
-    height: 320px;
-    position: relative;
-  }
-
-  .cell-diagram svg {
-    width: 100%;
-    height: 100%;
-  }
-
-  /* Stats strip */
+  /* STATS */
   .stats-strip {
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     background: var(--surface);
-    padding: 32px 48px;
+    padding: 36px 48px;
+    position: relative; z-index: 1;
   }
-
   .stats-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0;
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(4,1fr);
   }
-
-  .stat-item {
-    padding: 0 32px;
-    border-right: 1px solid var(--border);
-  }
-
+  .stat-item { padding: 0 32px; border-right: 1px solid var(--border); }
   .stat-item:first-child { padding-left: 0; }
   .stat-item:last-child { border-right: none; }
-
   .stat-number {
     font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 800;
-    font-size: 48px;
-    line-height: 1;
-    color: var(--accent);
-    letter-spacing: -0.02em;
+    font-weight: 800; font-size: 52px; line-height: 1;
+    color: var(--accent); letter-spacing: -0.02em;
   }
-
   .stat-label {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-mid);
-    margin-top: 6px;
-    line-height: 1.4;
+    font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: #C0C0C0;
+    margin-top: 6px; line-height: 1.4;
   }
+  .stat-note { font-size: 11px; color: var(--text-low); margin-top: 4px; font-style: italic; }
 
-  .stat-note {
-    font-size: 10px;
-    color: var(--text-low);
-    margin-top: 4px;
-    font-style: italic;
-  }
-
-  /* ─── SECTIONS ─── */
+  /* SECTIONS */
   .section {
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 1200px; margin: 0 auto;
     padding: 100px 48px;
+    position: relative; z-index: 1;
   }
-
   .section-label {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--accent);
+    font-size: 11px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent);
     margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    display: flex; align-items: center; gap: 10px;
   }
-
   .section-label::before {
-    content: '';
-    display: block;
-    width: 24px;
-    height: 1px;
-    background: var(--accent);
+    content: ''; display: block;
+    width: 24px; height: 1px; background: var(--accent);
   }
-
   h2 {
     font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 800;
-    font-size: clamp(36px, 4vw, 52px);
-    line-height: 1;
-    letter-spacing: -0.01em;
-    color: var(--text);
-    margin-bottom: 40px;
+    font-weight: 800; font-size: clamp(36px,4vw,52px);
+    line-height: 1; letter-spacing: -0.01em;
+    color: var(--text); margin-bottom: 40px;
   }
 
-  /* ─── DIFFERENTIATOR ─── */
+  /* DIFFERENTIATOR */
   #differentiator .diff-body {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: start;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: start;
   }
-
   .diff-text p {
-    font-size: 17px;
-    font-weight: 300;
-    line-height: 1.75;
-    color: #CCCCCC;
-    margin-bottom: 20px;
+    font-size: 16px; font-weight: 300;
+    line-height: 1.8; color: #D0D0D0; margin-bottom: 20px;
   }
-
-  .diff-text p strong {
-    color: var(--text);
-    font-weight: 500;
-  }
-
+  .diff-text p strong { color: var(--text); font-weight: 500; }
   .loop-diagram {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 32px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 32px;
   }
-
   .loop-title {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-mid);
-    margin-bottom: 24px;
+    font-size: 11px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #C0C0C0; margin-bottom: 24px;
   }
-
-  .loop-steps {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
   .loop-step {
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    padding: 14px 0;
-    border-bottom: 1px solid var(--border);
-    position: relative;
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 14px 0; border-bottom: 1px solid var(--border);
   }
-
   .loop-step:last-child { border-bottom: none; }
-
   .step-num {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: var(--accent);
-    min-width: 24px;
-    padding-top: 2px;
+    font-size: 11px; color: var(--accent);
+    min-width: 24px; padding-top: 2px;
   }
+  .step-name { font-weight: 600; font-size: 14px; color: var(--text); margin-bottom: 2px; }
+  .step-detail { font-size: 12px; color: #B0B0B0; font-family: 'IBM Plex Mono', monospace; }
 
-  .step-content { }
-
-  .step-name {
-    font-weight: 600;
-    font-size: 14px;
-    color: var(--text);
-    margin-bottom: 2px;
-  }
-
-  .step-detail {
-    font-size: 12px;
-    color: var(--text-mid);
-    font-family: 'IBM Plex Mono', monospace;
-  }
-
-  .loop-arrow {
-    text-align: center;
-    color: var(--accent-dim);
-    font-size: 18px;
-    line-height: 1;
-    margin: 0;
-    padding: 2px 0;
-  }
-
-  /* ─── CAPABILITIES ─── */
-  #capabilities { background: var(--surface); }
-
-  #capabilities .section {
-    padding-top: 100px;
-    padding-bottom: 100px;
-  }
-
+  /* CAPABILITIES */
+  #capabilities { background: var(--surface); position: relative; z-index: 1; }
   .cap-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 2px; background: var(--border);
+    border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
   }
-
-  .cap-card {
-    background: var(--surface2);
-    padding: 36px 32px;
-    transition: background 0.2s;
-  }
-
+  .cap-card { background: var(--surface2); padding: 36px 32px; transition: background 0.2s; }
   .cap-card:hover { background: #1E1E1E; }
-
-  .cap-icon {
-    font-size: 28px;
-    margin-bottom: 16px;
-  }
-
+  .cap-icon { width: 40px; height: 40px; margin-bottom: 20px; color: var(--accent); }
   .cap-title {
     font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 22px;
-    letter-spacing: 0.02em;
-    color: var(--text);
-    margin-bottom: 20px;
+    font-weight: 700; font-size: 22px; letter-spacing: 0.02em;
+    color: var(--text); margin-bottom: 20px;
   }
-
-  .cap-items {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
+  .cap-items { list-style: none; display: flex; flex-direction: column; gap: 10px; }
   .cap-items li {
-    font-size: 13px;
-    color: var(--text-mid);
-    padding-left: 16px;
-    position: relative;
-    line-height: 1.5;
+    font-size: 13px; color: #C0C0C0;
+    padding-left: 16px; position: relative; line-height: 1.55;
   }
-
   .cap-items li::before {
-    content: '—';
-    position: absolute;
-    left: 0;
-    color: var(--accent-dim);
-    font-size: 11px;
+    content: '—'; position: absolute; left: 0;
+    color: var(--accent-dim); font-size: 11px;
   }
 
-  /* ─── FEATURED WORK ─── */
-  .work-header {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: end;
-    margin-bottom: 48px;
-  }
-
+  /* FEATURED WORK */
   .work-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden;
   }
-
-  .work-card-header {
-    padding: 40px 48px 32px;
-    border-bottom: 1px solid var(--border);
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: start;
-    gap: 40px;
-  }
-
+  .work-card-header { padding: 40px 48px 32px; border-bottom: 1px solid var(--border); }
   .work-company {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 10px;
+    font-size: 11px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
   }
-
   .work-title {
     font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 800;
-    font-size: 36px;
-    color: var(--text);
-    line-height: 1;
-    margin-bottom: 12px;
+    font-weight: 800; font-size: 36px;
+    color: var(--text); line-height: 1; margin-bottom: 12px;
   }
-
-  .work-meta {
-    font-size: 13px;
-    color: var(--text-mid);
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
-  .work-meta span {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .work-body {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-  }
-
-  .work-left {
-    padding: 40px 48px;
-    border-right: 1px solid var(--border);
-  }
-
-  .work-right {
-    padding: 40px 48px;
-  }
-
+  .work-meta { font-size: 13px; color: #B0B0B0; display: flex; gap: 20px; flex-wrap: wrap; }
+  .work-body { display: grid; grid-template-columns: 1fr 1fr; }
+  .work-left { padding: 40px 48px; border-right: 1px solid var(--border); }
+  .work-right { padding: 40px 48px; }
   .work-section-title {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-low);
-    margin-bottom: 16px;
+    font-size: 11px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #888; margin-bottom: 16px;
   }
-
   .work-description {
-    font-size: 15px;
-    font-weight: 300;
-    line-height: 1.75;
-    color: #CCCCCC;
-    margin-bottom: 24px;
+    font-size: 15px; font-weight: 300;
+    line-height: 1.8; color: #D0D0D0; margin-bottom: 28px;
   }
-
-  .work-description strong {
-    color: var(--text);
-    font-weight: 500;
-  }
-
-  .work-bullets {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
+  .work-description strong { color: var(--text); font-weight: 500; }
+  .work-bullets { list-style: none; display: flex; flex-direction: column; gap: 12px; }
   .work-bullets li {
-    font-size: 14px;
-    color: var(--text-mid);
-    padding-left: 20px;
-    position: relative;
-    line-height: 1.55;
+    font-size: 14px; color: #C0C0C0;
+    padding-left: 20px; position: relative; line-height: 1.6;
   }
-
   .work-bullets li::before {
-    content: '▸';
-    position: absolute;
-    left: 0;
-    color: var(--accent);
-    font-size: 10px;
-    top: 4px;
+    content: '▸'; position: absolute; left: 0;
+    color: var(--accent); font-size: 10px; top: 4px;
   }
 
-  /* Performance metrics */
-  .metrics-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 24px;
-  }
-
+  /* METRICS */
+  .metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
   .metric-card {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px;
   }
-
   .metric-value {
     font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 800;
-    font-size: 28px;
-    color: var(--accent);
-    line-height: 1;
-    margin-bottom: 4px;
+    font-weight: 800; font-size: 28px;
+    color: var(--accent); line-height: 1; margin-bottom: 4px;
   }
-
-  .metric-name {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 2px;
-  }
-
-  .metric-context {
-    font-size: 11px;
-    color: var(--text-low);
-    font-family: 'IBM Plex Mono', monospace;
-  }
-
+  .metric-name { font-size: 12px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+  .metric-context { font-size: 11px; color: #888; font-family: 'IBM Plex Mono', monospace; }
   .metrics-disclaimer {
-    font-size: 11px;
-    color: var(--text-low);
-    font-style: italic;
-    margin-bottom: 24px;
-    padding: 10px 14px;
+    font-size: 11px; color: #999; font-style: italic;
+    margin-bottom: 20px; padding: 10px 14px;
     background: rgba(255,255,255,0.02);
     border-left: 2px solid var(--accent-dim);
-    border-radius: 0 var(--radius) var(--radius) 0;
+    border-radius: 0 var(--radius) var(--radius) 0; line-height: 1.5;
   }
 
-  /* Patent section within work card */
+  /* CELL DIAGRAM */
+  .cell-diagram-section {
+    border-top: 1px solid var(--border);
+    padding: 40px 48px;
+    background: rgba(232,152,30,0.02);
+  }
+  .cell-diagram-inner {
+    display: grid; grid-template-columns: 280px 1fr;
+    gap: 48px; align-items: center;
+  }
+  .cell-svg-wrap { width: 280px; }
+  .cell-svg-wrap svg { width: 100%; height: auto; }
+  .cell-diagram-text h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 22px;
+    color: var(--text); margin-bottom: 14px;
+  }
+  .cell-diagram-text p {
+    font-size: 14px; font-weight: 300;
+    line-height: 1.75; color: #C8C8C8; margin-bottom: 12px;
+  }
+
+  /* LAB PHOTOS */
+  .lab-photos-section { border-top: 1px solid var(--border); padding: 40px 48px; }
+  .lab-photos-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+  .lab-photo-item img {
+    width: 100%; height: 220px; object-fit: cover;
+    border-radius: 4px; border: 1px solid var(--border);
+    display: block; filter: grayscale(20%);
+    transition: filter 0.3s, transform 0.3s;
+  }
+  .lab-photo-item img:hover { filter: grayscale(0%); transform: scale(1.02); }
+  .lab-photo-caption {
+    margin-top: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; color: #B0B0B0;
+    letter-spacing: 0.03em; line-height: 1.5;
+  }
+  .lab-photo-caption strong {
+    display: block; color: var(--text);
+    margin-bottom: 3px; font-size: 12px;
+  }
+
+  /* PATENT */
   .patent-section {
     border-top: 1px solid var(--border);
     padding: 40px 48px;
     background: rgba(232,152,30,0.03);
   }
-
-  .patent-header {
-    display: flex;
-    align-items: flex-start;
-    gap: 24px;
-    margin-bottom: 24px;
-  }
-
+  .patent-header { display: flex; align-items: flex-start; gap: 24px; margin-bottom: 28px; }
   .patent-seal {
-    width: 64px;
-    height: 64px;
+    width: 64px; height: 64px;
     background: rgba(232,152,30,0.1);
-    border: 1px solid var(--accent-dim);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    flex-shrink: 0;
+    border: 1px solid var(--accent-dim); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
   }
-
-  .patent-info { }
-
+  .patent-seal svg { width: 28px; height: 28px; color: var(--accent); }
   .patent-label {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 6px;
+    font-size: 11px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 6px;
   }
-
   .patent-title {
     font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 24px;
-    color: var(--text);
-    line-height: 1.1;
-    margin-bottom: 6px;
+    font-weight: 700; font-size: 24px;
+    color: var(--text); line-height: 1.1; margin-bottom: 6px;
   }
-
-  .patent-number {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    color: var(--text-mid);
-  }
-
-  .patent-body {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-  }
-
+  .patent-number { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #B0B0B0; }
+  .patent-body { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
   .patent-description {
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 1.7;
-    color: #CCCCCC;
+    font-size: 14px; font-weight: 300;
+    line-height: 1.75; color: #D0D0D0; margin-bottom: 14px;
   }
-
-  .patent-details { }
-
-  .detail-row {
-    display: flex;
-    gap: 12px;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 13px;
-  }
-
+  .detail-row { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
   .detail-row:last-child { border-bottom: none; }
-
   .detail-key {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: var(--text-low);
-    min-width: 100px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    padding-top: 1px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    color: #888; min-width: 100px;
+    text-transform: uppercase; letter-spacing: 0.06em; padding-top: 1px;
   }
-
-  .detail-val {
-    color: var(--text-mid);
-    font-size: 13px;
-  }
-
+  .detail-val { color: #C8C8C8; font-size: 13px; }
   .patent-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 24px;
-    color: var(--accent);
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 500;
-    font-family: 'IBM Plex Mono', monospace;
-    letter-spacing: 0.04em;
-    border-bottom: 1px solid var(--accent-dim);
-    padding-bottom: 2px;
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 20px; color: var(--accent); text-decoration: none;
+    font-size: 13px; font-weight: 500;
+    font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--accent-dim); padding-bottom: 2px;
     transition: border-color 0.2s;
   }
-
   .patent-link:hover { border-color: var(--accent); }
 
-  /* Pipeline */
-  .pipeline-chips {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-top: 8px;
-  }
-
-  .chip {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    padding: 4px 10px;
-    border-radius: 2px;
-    background: rgba(232,152,30,0.08);
-    color: var(--accent);
-    border: 1px solid var(--accent-dim);
-  }
-
-  /* ─── EDUCATION ─── */
+  /* EDUCATION */
   #education { border-top: 1px solid var(--border); }
-
   .edu-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 48px;
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 2px; background: var(--border);
+    border: 1px solid var(--border); border-radius: 8px;
+    overflow: hidden; margin-bottom: 40px;
   }
-
-  .edu-card {
-    background: var(--surface);
-    padding: 28px;
-  }
-
+  .edu-card { background: var(--surface); padding: 28px; }
   .edu-degree {
     font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 18px;
-    color: var(--text);
-    margin-bottom: 4px;
-    line-height: 1.2;
+    font-weight: 700; font-size: 18px;
+    color: var(--text); margin-bottom: 6px; line-height: 1.2;
   }
-
-  .edu-school {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-mid);
-    margin-bottom: 4px;
-  }
-
+  .edu-school { font-size: 13px; font-weight: 500; color: #C8C8C8; margin-bottom: 4px; }
   .edu-year {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: var(--text-low);
+    font-size: 11px; color: #888;
+    letter-spacing: 0.06em; margin-bottom: 8px;
+  }
+  .edu-note { font-size: 12px; color: #A8A8A8; font-style: italic; line-height: 1.5; }
+  .edu-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 12px; color: var(--accent); text-decoration: none;
+    font-size: 11px; font-family: 'IBM Plex Mono', monospace;
     letter-spacing: 0.06em;
+    border-bottom: 1px solid var(--accent-dim); padding-bottom: 1px;
+    transition: border-color 0.2s;
   }
-
-  .edu-note {
-    font-size: 12px;
-    color: var(--text-low);
-    margin-top: 8px;
-    font-style: italic;
-  }
-
-  .earlier-section { }
-
+  .edu-link:hover { border-color: var(--accent); }
   .earlier-title {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-low);
-    margin-bottom: 16px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: #888; margin-bottom: 16px;
   }
-
-  .earlier-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-  }
-
+  .earlier-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; }
   .earlier-item {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px 20px;
-    font-size: 13px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px 20px; font-size: 13px;
   }
+  .earlier-role { font-weight: 600; color: var(--text); margin-bottom: 3px; }
+  .earlier-org { color: #B0B0B0; margin-bottom: 3px; }
+  .earlier-period { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #777; letter-spacing: 0.04em; }
 
-  .earlier-role {
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 2px;
-  }
-
-  .earlier-org {
-    color: var(--text-mid);
-    margin-bottom: 2px;
-  }
-
-  .earlier-period {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: var(--text-low);
-    letter-spacing: 0.04em;
-  }
-
-  /* ─── CONTACT ─── */
-  #contact {
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-  }
-
-  .contact-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: start;
-  }
-
-  .contact-text h2 { margin-bottom: 16px; }
-
-  .contact-text p {
-    font-size: 16px;
-    font-weight: 300;
-    color: var(--text-mid);
-    line-height: 1.7;
-    margin-bottom: 32px;
-  }
-
-  .contact-links {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
+  /* CONTACT */
+  #contact { background: var(--surface); border-top: 1px solid var(--border); position: relative; z-index: 1; }
+  .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .contact-text p { font-size: 16px; font-weight: 300; color: #C8C8C8; line-height: 1.75; margin-bottom: 32px; }
+  .contact-links { display: flex; flex-direction: column; gap: 14px; }
   .contact-link {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    text-decoration: none;
-    padding: 16px 20px;
-    background: var(--bg);
-    border: 1px solid var(--border);
+    display: flex; align-items: center; gap: 16px;
+    text-decoration: none; padding: 16px 20px;
+    background: var(--bg); border: 1px solid var(--border);
     border-radius: var(--radius);
     transition: border-color 0.2s, transform 0.15s;
   }
-
-  .contact-link:hover {
-    border-color: var(--accent);
-    transform: translateX(4px);
-  }
-
+  .contact-link:hover { border-color: var(--accent); transform: translateX(4px); }
   .contact-link-icon {
-    font-size: 20px;
-    min-width: 24px;
-    text-align: center;
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
   }
-
-  .contact-link-body { }
-
+  .contact-link-icon svg { width: 20px; height: 20px; color: var(--accent); }
   .contact-link-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-low);
-    margin-bottom: 2px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: #777; margin-bottom: 3px;
   }
+  .contact-link-value { font-size: 14px; color: var(--text); font-weight: 500; }
 
-  .contact-link-value {
-    font-size: 14px;
-    color: var(--text);
-    font-weight: 500;
-  }
-
-  /* ─── FOOTER ─── */
+  /* FOOTER */
   footer {
-    border-top: 1px solid var(--border);
-    padding: 24px 48px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    border-top: 1px solid var(--border); padding: 24px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: relative; z-index: 1;
   }
+  .footer-left { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #666; letter-spacing: 0.04em; }
+  .footer-right { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #555; }
 
-  .footer-left {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    color: var(--text-low);
-    letter-spacing: 0.04em;
-  }
-
-  .footer-right {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: var(--text-low);
-  }
-
-  /* ─── ANIMATIONS ─── */
-  .fade-in {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-
-  .fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
+  /* FADE IN */
+  .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
   .fade-in-delay-1 { transition-delay: 0.1s; }
   .fade-in-delay-2 { transition-delay: 0.2s; }
   .fade-in-delay-3 { transition-delay: 0.3s; }
-  .fade-in-delay-4 { transition-delay: 0.4s; }
 
-  /* ─── RESPONSIVE ─── */
-  @media (max-width: 900px) {
+  /* RESPONSIVE */
+  @media (max-width: 960px) {
     nav { padding: 0 24px; }
-
-    #hero {
-      grid-template-columns: 1fr;
-      padding: 100px 24px 60px;
-      gap: 40px;
-    }
-
-    .hero-visual { display: none; }
-
-    .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .nav-links { gap: 18px; }
+    #hero { grid-template-columns: 1fr; padding: 100px 24px 60px; gap: 48px; }
+    .hero-photo { width: 100%; max-width: 300px; height: 320px; }
+    .stats-inner { grid-template-columns: repeat(2,1fr); gap: 28px; }
     .stat-item { border-right: none; padding: 0; }
-
+    .stats-strip { padding: 32px 24px; }
     .section { padding: 60px 24px; }
-
     #differentiator .diff-body { grid-template-columns: 1fr; gap: 40px; }
-
     .cap-grid { grid-template-columns: 1fr; }
-
-    .work-card-header { grid-template-columns: 1fr; }
     .work-body { grid-template-columns: 1fr; }
-    .work-left { border-right: none; border-bottom: 1px solid var(--border); }
+    .work-card-header { padding: 28px; }
+    .work-left { border-right: none; border-bottom: 1px solid var(--border); padding: 28px; }
+    .work-right { padding: 28px; }
+    .cell-diagram-inner { grid-template-columns: 1fr; }
+    .cell-svg-wrap { width: 100%; max-width: 260px; }
+    .cell-diagram-section, .lab-photos-section, .patent-section { padding: 28px; }
+    .lab-photos-grid { grid-template-columns: 1fr; gap: 28px; }
+    .lab-photo-item img { height: 240px; }
     .patent-body { grid-template-columns: 1fr; }
-
     .edu-grid { grid-template-columns: 1fr; }
     .earlier-grid { grid-template-columns: 1fr; }
-
     .contact-inner { grid-template-columns: 1fr; gap: 40px; }
-
     footer { flex-direction: column; gap: 8px; text-align: center; padding: 20px 24px; }
-
-    .metrics-grid { grid-template-columns: 1fr 1fr; }
-
-    .stats-strip { padding: 32px 24px; }
   }
 </style>
 </head>
 <body>
+
+<canvas id="particle-canvas"></canvas>
 
 <!-- NAV -->
 <nav>
@@ -1011,12 +567,10 @@
     <div class="hero-tag">Battery Materials Engineer</div>
     <h1>Sai Aman<br><span>Gopisetti</span></h1>
     <p class="hero-statement">
-      I build <strong>carbon-based anode materials for Li-ion batteries</strong> — 
-      from formulation through cell-level validation — and turn that work into IP. 
-      Named inventor, U.S. Patent No. 12,308,433.
+      <span id="typed-text"></span><span class="typed-cursor" id="typed-cursor"></span>
     </p>
     <div class="patent-badge">
-      <span class="icon">⚡</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
       <span>Granted U.S. Patent No. 12,308,433 · Electrode Materials &amp; Fabrication</span>
     </div>
     <div class="hero-ctas">
@@ -1026,79 +580,9 @@
   </div>
 
   <div class="hero-visual fade-in fade-in-delay-2">
-    <div class="cell-diagram">
-      <!-- Animated coin cell cross-section SVG -->
-      <svg viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#E8981E" stop-opacity="0.15"/>
-            <stop offset="100%" stop-color="#E8981E" stop-opacity="0"/>
-          </radialGradient>
-          <filter id="glow">
-            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-            <feMerge>
-              <feMergeNode in="coloredBlur"/>
-              <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-          </filter>
-        </defs>
-        <!-- Background glow -->
-        <circle cx="160" cy="160" r="140" fill="url(#glowGrad)"/>
-        <!-- Outer ring -->
-        <circle cx="160" cy="160" r="130" stroke="#2A2A2A" stroke-width="1"/>
-        <circle cx="160" cy="160" r="120" stroke="#333" stroke-width="0.5"/>
-
-        <!-- Cell body — stacked layers (coin cell cross section side view) -->
-        <!-- Anode current collector -->
-        <rect x="70" y="105" width="180" height="14" rx="2" fill="#1A1A1A" stroke="#E8981E" stroke-width="1.5" filter="url(#glow)"/>
-        <text x="160" y="115" font-family="IBM Plex Mono, monospace" font-size="9" fill="#E8981E" text-anchor="middle" letter-spacing="1">ANODE C.C.</text>
-
-        <!-- Anode — NSPG graphene layer -->
-        <rect x="70" y="122" width="180" height="20" rx="1" fill="rgba(232,152,30,0.12)" stroke="#E8981E" stroke-width="1" stroke-dasharray="4 2"/>
-        <text x="160" y="136" font-family="IBM Plex Mono, monospace" font-size="9" fill="#E8981E" text-anchor="middle" letter-spacing="1">GRAPHENE ANODE (NSPG)</text>
-
-        <!-- Separator -->
-        <rect x="70" y="145" width="180" height="10" rx="1" fill="rgba(150,180,220,0.08)" stroke="#446" stroke-width="1"/>
-        <text x="160" y="153" font-family="IBM Plex Mono, monospace" font-size="8" fill="#557" text-anchor="middle" letter-spacing="1">SEPARATOR</text>
-
-        <!-- Electrolyte indicator -->
-        <rect x="70" y="158" width="180" height="8" rx="0" fill="rgba(100,150,200,0.05)" stroke="#334" stroke-width="0.5"/>
-        <text x="160" y="165" font-family="IBM Plex Mono, monospace" font-size="7" fill="#446" text-anchor="middle" letter-spacing="0.5">IONIC LIQUID ELECTROLYTE</text>
-
-        <!-- Cathode -->
-        <rect x="70" y="169" width="180" height="18" rx="1" fill="rgba(80,120,180,0.1)" stroke="#446688" stroke-width="1" stroke-dasharray="4 2"/>
-        <text x="160" y="181" font-family="IBM Plex Mono, monospace" font-size="9" fill="#6688AA" text-anchor="middle" letter-spacing="1">CATHODE</text>
-
-        <!-- Cathode current collector -->
-        <rect x="70" y="190" width="180" height="14" rx="2" fill="#1A1A1A" stroke="#446688" stroke-width="1.5"/>
-        <text x="160" y="200" font-family="IBM Plex Mono, monospace" font-size="9" fill="#6688AA" text-anchor="middle" letter-spacing="1">CATHODE C.C.</text>
-
-        <!-- Labels on left -->
-        <line x1="68" y1="112" x2="48" y2="112" stroke="#333" stroke-width="0.5"/>
-        <line x1="68" y1="132" x2="48" y2="132" stroke="#333" stroke-width="0.5"/>
-        <line x1="68" y1="150" x2="48" y2="150" stroke="#333" stroke-width="0.5"/>
-        <line x1="68" y1="178" x2="48" y2="178" stroke="#333" stroke-width="0.5"/>
-        <line x1="68" y1="197" x2="48" y2="197" stroke="#333" stroke-width="0.5"/>
-
-        <!-- Coin cell housing top/bottom -->
-        <path d="M60 105 Q60 95 70 95 L250 95 Q260 95 260 105" stroke="#555" stroke-width="1.5" fill="none"/>
-        <path d="M60 204 Q60 214 70 214 L250 214 Q260 214 260 204" stroke="#555" stroke-width="1.5" fill="none"/>
-
-        <!-- 2032 label -->
-        <text x="160" y="235" font-family="IBM Plex Mono, monospace" font-size="11" fill="#444" text-anchor="middle" letter-spacing="2">2032 COIN CELL</text>
-
-        <!-- Voltage callout -->
-        <circle cx="268" cy="150" r="28" fill="rgba(232,152,30,0.06)" stroke="rgba(232,152,30,0.2)" stroke-width="1"/>
-        <text x="268" y="146" font-family="Barlow Condensed, sans-serif" font-size="18" fill="#E8981E" text-anchor="middle" font-weight="800">4.19</text>
-        <text x="268" y="160" font-family="IBM Plex Mono, monospace" font-size="8" fill="#7A4E0A" text-anchor="middle">VOLTS</text>
-
-        <!-- Animated pulse ring -->
-        <circle cx="160" cy="150" r="8" fill="#E8981E" opacity="0.6">
-          <animate attributeName="r" values="8;24;8" dur="3s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0.6;0;0.6" dur="3s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="160" cy="150" r="4" fill="#E8981E"/>
-      </svg>
+    <div style="position:relative;display:inline-block;">
+      <img src="headshot.jpg" alt="Sai Aman Gopisetti" class="hero-photo">
+      <div class="hero-photo-accent"></div>
     </div>
   </div>
 </section>
@@ -1107,24 +591,24 @@
 <div class="stats-strip">
   <div class="stats-inner">
     <div class="stat-item fade-in">
-      <div class="stat-number">2–3×</div>
+      <div class="stat-number" data-target="2" data-suffix="–3×">0</div>
       <div class="stat-label">Energy Density<br>vs. LiR2032</div>
       <div class="stat-note">290 Wh/kg vs. 90 Wh/kg · half-cell validation</div>
     </div>
     <div class="stat-item fade-in fade-in-delay-1">
-      <div class="stat-number">5.5×</div>
+      <div class="stat-number" data-target="5" data-suffix=".5×">0</div>
       <div class="stat-label">Faster Charging<br>vs. LiR2032</div>
       <div class="stat-note">1.44 hrs vs. 8 hrs · half-cell validation</div>
     </div>
     <div class="stat-item fade-in fade-in-delay-2">
-      <div class="stat-number">4+</div>
-      <div class="stat-label">Years R&amp;D<br>End-to-End</div>
+      <div class="stat-number" data-target="4" data-suffix="+">0</div>
+      <div class="stat-label">Years End-to-End<br>R&amp;D</div>
       <div class="stat-note">Sole technical contributor · startup environment</div>
     </div>
     <div class="stat-item fade-in fade-in-delay-3">
-      <div class="stat-number">4</div>
-      <div class="stat-label">U.S. Patent<br>Filings</div>
-      <div class="stat-note">1 granted · 1 notice of allowance · 2 in prosecution</div>
+      <div class="stat-number" data-target="1" data-suffix="">0</div>
+      <div class="stat-label">Granted U.S.<br>Patent</div>
+      <div class="stat-note">U.S. Patent No. 12,308,433 · granted 2025</div>
     </div>
   </div>
 </div>
@@ -1136,73 +620,18 @@
     <h2>I Own the Full Loop</h2>
     <div class="diff-body">
       <div class="diff-text fade-in">
-        <p>
-          Most battery engineers own one piece of the development chain. 
-          They characterize powders but never build cells, or they assemble and test 
-          but can't trace a failure back to the material. 
-          <strong>I do both — and the connection between them is where the value lives.</strong>
-        </p>
-        <p>
-          At FONASE, I was the sole technical contributor building a novel graphene-based 
-          anode platform from the ground up. No supervisor. No lab budget. No inherited process. 
-          I selected materials, formulated electrode chemistries, fabricated electrodes, 
-          ran characterization, built coin cells, and interpreted the electrochemical data 
-          to drive the next iteration.
-        </p>
-        <p>
-          That loop — from <strong>material decision to cell performance to next design choice</strong> — 
-          is what produced a granted U.S. Patent and performance results that hold up 
-          to technical scrutiny. It's also exactly what a battery manufacturer needs 
-          on a materials or electrode development team.
-        </p>
+        <p>Most battery engineers own one piece of the development chain. They characterize powders but never build cells, or they assemble and test but cannot trace a failure back to the material. <strong>I do both. The connection between them is where the value lives.</strong></p>
+        <p>At FONASE, I was the sole technical contributor building a novel graphene-based anode platform from scratch. No supervisor. No lab budget. No inherited process. I selected materials, formulated electrode chemistries, fabricated electrodes, ran characterization, built coin cells, and interpreted the electrochemical data to drive the next design iteration.</p>
+        <p>That loop — from <strong>material decision to cell performance to next design choice</strong> — produced a granted U.S. Patent and performance results that hold up to technical scrutiny. It is also exactly what a battery manufacturer needs on an electrode or anode development team.</p>
       </div>
-
       <div class="loop-diagram fade-in fade-in-delay-2">
         <div class="loop-title">The Development Loop</div>
-        <div class="loop-steps">
-          <div class="loop-step">
-            <span class="step-num">01</span>
-            <div class="step-content">
-              <div class="step-name">Material Selection &amp; Formulation</div>
-              <div class="step-detail">Graphene oxide · dopants · binders · electrolyte systems</div>
-            </div>
-          </div>
-          <div class="loop-step">
-            <span class="step-num">02</span>
-            <div class="step-content">
-              <div class="step-name">Electrode Fabrication</div>
-              <div class="step-detail">Slurry prep · coating · drying · calendering · cutting</div>
-            </div>
-          </div>
-          <div class="loop-step">
-            <span class="step-num">03</span>
-            <div class="step-content">
-              <div class="step-name">Materials Characterization</div>
-              <div class="step-detail">SEM · XRD · Raman · XPS · BET · FTIR</div>
-            </div>
-          </div>
-          <div class="loop-step">
-            <span class="step-num">04</span>
-            <div class="step-content">
-              <div class="step-name">Cell Assembly</div>
-              <div class="step-detail">2032 coin cell · separator selection · electrolyte filling</div>
-            </div>
-          </div>
-          <div class="loop-step">
-            <span class="step-num">05</span>
-            <div class="step-content">
-              <div class="step-name">Electrochemical Validation</div>
-              <div class="step-detail">Galvanostatic cycling · CV · EIS · dQ/dV · aging analysis</div>
-            </div>
-          </div>
-          <div class="loop-step">
-            <span class="step-num">06</span>
-            <div class="step-content">
-              <div class="step-name">Iterate → IP</div>
-              <div class="step-detail">Data-driven material redesign · technical documentation · patent</div>
-            </div>
-          </div>
-        </div>
+        <div class="loop-step"><span class="step-num">01</span><div><div class="step-name">Material Selection &amp; Formulation</div><div class="step-detail">Graphene oxide · dopants · binders · electrolyte systems</div></div></div>
+        <div class="loop-step"><span class="step-num">02</span><div><div class="step-name">Electrode Fabrication</div><div class="step-detail">Slurry prep · coating · drying · calendering · cutting</div></div></div>
+        <div class="loop-step"><span class="step-num">03</span><div><div class="step-name">Materials Characterization</div><div class="step-detail">SEM · XRD · Raman · XPS · BET · FTIR</div></div></div>
+        <div class="loop-step"><span class="step-num">04</span><div><div class="step-name">Cell Assembly</div><div class="step-detail">2032 coin cell · separator selection · electrolyte filling</div></div></div>
+        <div class="loop-step"><span class="step-num">05</span><div><div class="step-name">Electrochemical Validation</div><div class="step-detail">Galvanostatic cycling · CV · EIS · dQ/dV · aging analysis</div></div></div>
+        <div class="loop-step"><span class="step-num">06</span><div><div class="step-name">Iterate to IP</div><div class="step-detail">Data-driven redesign · technical documentation · patent</div></div></div>
       </div>
     </div>
   </div>
@@ -1215,7 +644,13 @@
     <h2>What I Bring on Day One</h2>
     <div class="cap-grid">
       <div class="cap-card fade-in">
-        <div class="cap-icon">⚗️</div>
+        <svg class="cap-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 6v12L6 32a2 2 0 001.8 2.9h20.4A2 2 0 0030 32L22 18V6"/>
+          <line x1="12" y1="6" x2="28" y2="6"/>
+          <circle cx="24" cy="27" r="1.5" fill="currentColor" stroke="none"/>
+          <circle cx="18" cy="30" r="1" fill="currentColor" stroke="none"/>
+          <circle cx="21" cy="24" r="1" fill="currentColor" stroke="none"/>
+        </svg>
         <div class="cap-title">Cell Development</div>
         <ul class="cap-items">
           <li>Carbon-based anode material development and surface modification</li>
@@ -1227,9 +662,15 @@
           <li>Scalable solution-based fabrication process development</li>
         </ul>
       </div>
-
       <div class="cap-card fade-in fade-in-delay-1">
-        <div class="cap-icon">🔬</div>
+        <svg class="cap-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="20" cy="14" r="7"/>
+          <line x1="20" y1="21" x2="20" y2="30"/>
+          <line x1="14" y1="34" x2="26" y2="34"/>
+          <line x1="8" y1="30" x2="32" y2="30"/>
+          <line x1="14" y1="10" x2="10" y2="6"/>
+          <line x1="26" y1="10" x2="30" y2="6"/>
+        </svg>
         <div class="cap-title">Characterization &amp; Testing</div>
         <ul class="cap-items">
           <li>SEM, XRD, FTIR, Raman, XPS, BET — morphology, crystallinity, surface chemistry</li>
@@ -1241,9 +682,16 @@
           <li>Specification development and qualification</li>
         </ul>
       </div>
-
       <div class="cap-card fade-in fade-in-delay-2">
-        <div class="cap-icon">📐</div>
+        <svg class="cap-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="20" cy="8" r="3"/>
+          <circle cx="8" cy="30" r="3"/>
+          <circle cx="32" cy="30" r="3"/>
+          <line x1="20" y1="11" x2="10" y2="27"/>
+          <line x1="20" y1="11" x2="30" y2="27"/>
+          <line x1="11" y1="30" x2="29" y2="30"/>
+          <circle cx="20" cy="20" r="2" fill="currentColor" stroke="none"/>
+        </svg>
         <div class="cap-title">Coordination &amp; IP</div>
         <ul class="cap-items">
           <li>Cross-institutional R&amp;D coordination (IIT, Northwestern University)</li>
@@ -1264,54 +712,34 @@
   <div class="section">
     <div class="section-label">Featured Work</div>
     <h2>Graphene Anode Platform</h2>
-
     <div class="work-card fade-in">
+
       <div class="work-card-header">
-        <div>
-          <div class="work-company">FONASE Inc. · Chicago, IL · Battery Materials Startup</div>
-          <div class="work-title">Graphene-Based Li-ion<br>Anode Development</div>
-          <div class="work-meta">
-            <span>⏱ Nov 2021 – Present</span>
-            <span>🏛 R&amp;D Lead &amp; Co-Founder</span>
-            <span>🔬 Sole Technical Contributor</span>
-          </div>
+        <div class="work-company">FONASE Inc. · Chicago, IL · Battery Materials Startup</div>
+        <div class="work-title">Graphene-Based Li-ion Anode Development</div>
+        <div class="work-meta">
+          <span>Nov 2021 – Present</span>
+          <span>R&amp;D Lead &amp; Co-Founder</span>
+          <span>Sole Technical Contributor</span>
         </div>
       </div>
 
       <div class="work-body">
         <div class="work-left">
           <div class="work-section-title">The Challenge</div>
-          <p class="work-description">
-            Build a novel graphene-based anode platform from zero — no inherited process, 
-            no lab infrastructure, no research team. 
-            <strong>Develop electrode chemistries that demonstrably outperform 
-            conventional Li-ion coin cells</strong>, validate them electrochemically, 
-            and produce protectable IP under real startup resource constraints.
-          </p>
-
+          <p class="work-description">Build a novel graphene-based anode platform from zero — no inherited process, no lab infrastructure, no research team. <strong>Develop electrode chemistries that demonstrably outperform conventional Li-ion coin cells</strong>, validate them electrochemically, and produce protectable IP under real startup resource constraints.</p>
           <div class="work-section-title">What I Built</div>
           <ul class="work-bullets">
-            <li>Developed two proprietary graphene electrode architectures (NSPG and TRG) — 
-            nitrogen and sulfur co-doped porous graphene systems — via solution-based fabrication, 
-            eliminating the need for industrial deposition equipment</li>
-            <li>Designed and iterated electrode chemistries: active material selection, 
-            binder systems, conductive additive optimization, and electrolyte formulation 
-            including ionic liquid systems with carbonate additives</li>
-            <li>Conducted full materials characterization suite: SEM, XRD, Raman, XPS, BET 
-            to assess morphology, graphitic structure, doping levels, and surface area</li>
-            <li>Assembled and tested 2032 coin cells; analyzed 32+ charge/discharge cycles 
-            for capacity retention, coulombic efficiency, impedance evolution, and SEI behavior</li>
-            <li>Coordinated cell testing and validation with external partners at 
-            Illinois Institute of Technology and Northwestern University (NUfab cleanroom)</li>
+            <li>Developed two proprietary graphene electrode architectures — a co-doped porous graphene anode and a reduced graphene electrode — via solution-based fabrication, eliminating the need for industrial deposition equipment</li>
+            <li>Designed and iterated electrode chemistries across active material selection, binder systems, conductive additive optimization, and electrolyte formulation including ionic liquid systems with carbonate additives</li>
+            <li>Conducted full materials characterization: SEM, XRD, Raman, XPS, BET to assess morphology, graphitic structure, doping levels, and surface area</li>
+            <li>Assembled and tested 2032 coin cells across 32+ charge/discharge cycles, analyzing capacity retention, coulombic efficiency, impedance evolution, and SEI behavior</li>
+            <li>Coordinated cell testing and validation with external partners at Illinois Institute of Technology and Northwestern University (NUfab cleanroom)</li>
           </ul>
         </div>
-
         <div class="work-right">
           <div class="work-section-title">Performance Results · Half-Cell Validation</div>
-          <div class="metrics-disclaimer">
-            All metrics from 2032 coin cell half-cell validation. 
-            Comparison vs. industry-standard LiR2032.
-          </div>
+          <div class="metrics-disclaimer">All metrics from 2032 coin cell half-cell validation. Comparison vs. industry-standard LiR2032.</div>
           <div class="metrics-grid">
             <div class="metric-card">
               <div class="metric-value">290</div>
@@ -1334,7 +762,6 @@
               <div class="metric-context">vs. 500 cycles baseline · 20% longer</div>
             </div>
           </div>
-
           <div class="work-section-title">Collaborations</div>
           <ul class="work-bullets">
             <li>Illinois Institute of Technology — cell testing and electrochemical validation</li>
@@ -1343,11 +770,92 @@
         </div>
       </div>
 
-      <!-- PATENT — culmination of the work -->
+      <!-- CELL DIAGRAM -->
+      <div class="cell-diagram-section">
+        <div class="work-section-title" style="margin-bottom:28px;">Cell Architecture</div>
+        <div class="cell-diagram-inner">
+          <div class="cell-svg-wrap">
+            <svg viewBox="0 0 280 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <radialGradient id="g1" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#E8981E" stop-opacity="0.12"/>
+                  <stop offset="100%" stop-color="#E8981E" stop-opacity="0"/>
+                </radialGradient>
+                <filter id="f1"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              </defs>
+              <circle cx="140" cy="148" r="128" fill="url(#g1)"/>
+              <circle cx="140" cy="148" r="122" stroke="#222" stroke-width="1"/>
+              <path d="M52 96 Q52 86 62 86 L218 86 Q228 86 228 96" stroke="#555" stroke-width="1.5" fill="none"/>
+              <rect x="60" y="96" width="160" height="14" rx="2" fill="#1A1A1A" stroke="#E8981E" stroke-width="1.5" filter="url(#f1)"/>
+              <text x="140" y="107" font-family="IBM Plex Mono,monospace" font-size="8.5" fill="#E8981E" text-anchor="middle" letter-spacing="0.5">ANODE C.C.</text>
+              <rect x="60" y="113" width="160" height="20" rx="1" fill="rgba(232,152,30,0.1)" stroke="#E8981E" stroke-width="1" stroke-dasharray="5 2"/>
+              <text x="140" y="127" font-family="IBM Plex Mono,monospace" font-size="7.5" fill="#E8981E" text-anchor="middle" letter-spacing="0.5">CO-DOPED GRAPHENE ANODE</text>
+              <rect x="60" y="136" width="160" height="10" rx="1" fill="rgba(120,160,220,0.07)" stroke="#335" stroke-width="1"/>
+              <text x="140" y="144" font-family="IBM Plex Mono,monospace" font-size="7.5" fill="#557" text-anchor="middle" letter-spacing="0.5">SEPARATOR</text>
+              <rect x="60" y="149" width="160" height="8" rx="0" fill="rgba(80,120,200,0.04)" stroke="#223" stroke-width="0.5"/>
+              <text x="140" y="156" font-family="IBM Plex Mono,monospace" font-size="6.5" fill="#446" text-anchor="middle">IONIC LIQUID ELECTROLYTE</text>
+              <rect x="60" y="160" width="160" height="18" rx="1" fill="rgba(70,110,180,0.09)" stroke="#446688" stroke-width="1" stroke-dasharray="5 2"/>
+              <text x="140" y="172" font-family="IBM Plex Mono,monospace" font-size="8.5" fill="#6688AA" text-anchor="middle" letter-spacing="0.5">CATHODE</text>
+              <rect x="60" y="181" width="160" height="14" rx="2" fill="#1A1A1A" stroke="#446688" stroke-width="1.5"/>
+              <text x="140" y="191" font-family="IBM Plex Mono,monospace" font-size="8.5" fill="#6688AA" text-anchor="middle" letter-spacing="0.5">CATHODE C.C.</text>
+              <path d="M52 195 Q52 205 62 205 L218 205 Q228 205 228 195" stroke="#555" stroke-width="1.5" fill="none"/>
+              <circle cx="248" cy="148" r="26" fill="rgba(232,152,30,0.06)" stroke="rgba(232,152,30,0.25)" stroke-width="1"/>
+              <text x="248" y="144" font-family="Barlow Condensed,sans-serif" font-size="17" fill="#E8981E" text-anchor="middle" font-weight="800">4.19</text>
+              <text x="248" y="157" font-family="IBM Plex Mono,monospace" font-size="7" fill="#7A4E0A" text-anchor="middle">VOLTS</text>
+              <text x="140" y="222" font-family="IBM Plex Mono,monospace" font-size="10" fill="#444" text-anchor="middle" letter-spacing="2">2032 COIN CELL</text>
+              <circle cx="140" cy="148" r="6" fill="#E8981E" opacity="0.5">
+                <animate attributeName="r" values="6;20;6" dur="3s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.5;0;0.5" dur="3s" repeatCount="indefinite"/>
+              </circle>
+              <circle cx="140" cy="148" r="3" fill="#E8981E"/>
+            </svg>
+          </div>
+          <div class="cell-diagram-text">
+            <h3>2032 Coin Cell Architecture</h3>
+            <p>The cell uses a co-doped porous graphene anode paired with an optimized ionic liquid electrolyte system. The architecture was designed from scratch using a solution-based fabrication process, deliberately avoiding industrial deposition equipment to maintain scalability.</p>
+            <p>Separator selection (Celgard), electrolyte formulation, and current collector pairing were each iterated based on electrochemical data. Every design decision traces back to a specific performance observation from galvanostatic cycling, EIS, or dQ/dV analysis.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- LAB PHOTOS -->
+      <div class="lab-photos-section">
+        <div class="work-section-title" style="margin-bottom:20px;">In the Lab</div>
+        <div class="lab-photos-grid">
+          <div class="lab-photo-item">
+            <img src="lab1.jpg" alt="PLD system at Northwestern NUfab">
+            <div class="lab-photo-caption">
+              <strong>PLD System · Northwestern NUfab</strong>
+              Pulsed laser deposition system used in early graphene deposition experiments at Northwestern University's nanofabrication facility.
+            </div>
+          </div>
+          <div class="lab-photo-item">
+            <img src="lab2.jpg" alt="Cleanroom fabrication at Northwestern">
+            <div class="lab-photo-caption">
+              <strong>Cleanroom Fabrication · Northwestern NUfab</strong>
+              Electrode fabrication run inside Northwestern's ISO-rated cleanroom environment during sponsored research collaboration.
+            </div>
+          </div>
+          <div class="lab-photo-item">
+            <img src="lab3.jpg" alt="Glovebox coin cell assembly at IIT">
+            <div class="lab-photo-caption">
+              <strong>Glovebox Assembly · IIT CASSB</strong>
+              2032 coin cell assembly inside argon-filled glovebox at Illinois Institute of Technology for moisture-sensitive electrode and electrolyte handling.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PATENT -->
       <div class="patent-section">
         <div class="patent-header">
-          <div class="patent-seal">⚖️</div>
-          <div class="patent-info">
+          <div class="patent-seal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="8" r="6"/>
+              <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>
+            </svg>
+          </div>
+          <div>
             <div class="patent-label">Intellectual Property · Output of This Work</div>
             <div class="patent-title">Electrode Materials, Electrodes,<br>Devices, and Methods of Making Thereof</div>
             <div class="patent-number">U.S. Patent No. 12,308,433</div>
@@ -1355,51 +863,19 @@
         </div>
         <div class="patent-body">
           <div>
-            <p class="patent-description">
-              This patent covers the novel electrode material composition, fabrication methodology, 
-              and cell architecture developed during the FONASE R&amp;D program. It protects the 
-              co-doped graphene anode chemistry, the solution-based fabrication process designed 
-              for industrial scalability, and the integrated cell architecture that produced the 
-              validated performance improvements.
-            </p>
-            <p class="patent-description" style="margin-top:12px;">
-              The grant represents independent confirmation that the work produced original, 
-              non-obvious technical contribution — the same standard applied to any research output.
-            </p>
-            <a href="https://patents.google.com/patent/US12308433" target="_blank" class="patent-link">
-              View Published Patent →
-            </a>
+            <p class="patent-description">This patent covers the novel electrode material composition, fabrication methodology, and cell architecture developed during the FONASE R&amp;D program. It protects the co-doped graphene anode chemistry, the solution-based fabrication process designed for industrial scalability, and the integrated cell architecture that produced the validated performance improvements.</p>
+            <p class="patent-description">The grant represents independent confirmation that the work produced original, non-obvious technical contribution — the same standard applied to any research output.</p>
+            <a href="https://patents.google.com/patent/US12308433" target="_blank" class="patent-link">View Published Patent →</a>
           </div>
-          <div class="patent-details">
-            <div class="detail-row">
-              <span class="detail-key">Patent No.</span>
-              <span class="detail-val">US 12,308,433 B2</span>
-            </div>
-            <div class="detail-row">
-              <span class="detail-key">Status</span>
-              <span class="detail-val" style="color:#4CAF50">Granted · 2025</span>
-            </div>
-            <div class="detail-row">
-              <span class="detail-key">Inventor</span>
-              <span class="detail-val">Sai Aman Gopisetti (named inventor)</span>
-            </div>
-            <div class="detail-row">
-              <span class="detail-key">Coverage</span>
-              <span class="detail-val">Electrode composition · fabrication methods · cell architecture</span>
-            </div>
-            <div class="detail-row">
-              <span class="detail-key">Pipeline</span>
-              <div>
-                <div class="pipeline-chips">
-                  <span class="chip">Notice of Allowance</span>
-                  <span class="chip">Allowable Subject Matter</span>
-                  <span class="chip">Continuation</span>
-                </div>
-              </div>
-            </div>
+          <div>
+            <div class="detail-row"><span class="detail-key">Patent No.</span><span class="detail-val">US 12,308,433 B2</span></div>
+            <div class="detail-row"><span class="detail-key">Status</span><span class="detail-val" style="color:#5CB85C;">Granted · 2025</span></div>
+            <div class="detail-row"><span class="detail-key">Inventor</span><span class="detail-val">Sai Aman Gopisetti (named inventor)</span></div>
+            <div class="detail-row"><span class="detail-key">Coverage</span><span class="detail-val">Electrode composition · fabrication methods · cell architecture</span></div>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -1409,29 +885,28 @@
   <div class="section">
     <div class="section-label">Background</div>
     <h2>Education</h2>
-
     <div class="edu-grid fade-in">
       <div class="edu-card">
         <div class="edu-degree">MS, Project Management</div>
         <div class="edu-school">Harrisburg University of Science &amp; Technology</div>
         <div class="edu-year">Expected June 2026 · PMP Track</div>
-        <div class="edu-note">Combining battery domain expertise with formal program leadership</div>
+        <div class="edu-note">Combining battery domain expertise with formal program leadership capability</div>
       </div>
       <div class="edu-card">
         <div class="edu-degree">MS, Energy &amp; Mineral Engineering</div>
         <div class="edu-school">Pennsylvania State University</div>
         <div class="edu-year">May 2021 · GPA 3.75</div>
-        <div class="edu-note">Heterogeneous catalysis · metal-binding site differentiation · ICP-OES</div>
+        <div class="edu-note">Heterogeneous catalysis · metal-binding site differentiation · ICP-OES · UV-Vis spectroscopy</div>
+        <a href="penn-state-paper.pdf" target="_blank" class="edu-link">Research Paper →</a>
       </div>
       <div class="edu-card">
         <div class="edu-degree">BS, Chemical Engineering</div>
         <div class="edu-school">National Institute of Technology, Nagpur</div>
         <div class="edu-year">May 2018 · GPA 3.5</div>
-        <div class="edu-note">Thesis: Adsorption of impurities using magnetic nanoparticles</div>
+        <div class="edu-note">Thesis: Adsorption of impurities from effluent water using magnetic nanoparticles · XRD · FTIR · BET</div>
       </div>
     </div>
-
-    <div class="earlier-section fade-in">
+    <div class="fade-in">
       <div class="earlier-title">Earlier Research &amp; Industrial Experience</div>
       <div class="earlier-grid">
         <div class="earlier-item">
@@ -1446,13 +921,13 @@
         </div>
         <div class="earlier-item">
           <div class="earlier-role">Industrial Trainee</div>
-          <div class="earlier-org">DRDO · Dr. Reddy's · HPCL · Vizag Steel</div>
+          <div class="earlier-org">DRDO · Dr. Reddy's · HPCL · Vizag Steel Plant</div>
           <div class="earlier-period">2015 – 2017</div>
         </div>
         <div class="earlier-item">
-          <div class="earlier-role">Process Simulation</div>
-          <div class="earlier-org">Aspen Plus · SCADA/PLC design · TEMA/ASME standards</div>
-          <div class="earlier-period">Engineering Foundation</div>
+          <div class="earlier-role">Process Engineering Foundation</div>
+          <div class="earlier-org">Aspen Plus simulation · SCADA/PLC design · TEMA/ASME standards</div>
+          <div class="earlier-period">Engineering Background</div>
         </div>
       </div>
     </div>
@@ -1466,78 +941,134 @@
       <div class="contact-text fade-in">
         <div class="section-label">Contact</div>
         <h2>Let's Talk</h2>
-        <p>
-          I'm actively looking for roles in electrode materials R&amp;D and anode 
-          development at battery cell manufacturers and materials companies. 
-          If you're building or scaling electrode capability, I'd like to hear from you.
-        </p>
-        <a href="mailto:amangopisetti@gmail.com" class="btn-primary" style="width:fit-content">
-          Send an Email →
-        </a>
+        <p>I am actively looking for roles in electrode materials R&amp;D and anode development at battery cell manufacturers and materials companies. If you are building or scaling electrode capability, I would like to hear from you.</p>
+        <a href="mailto:amangopisetti@gmail.com" class="btn-primary" style="width:fit-content;">Send an Email →</a>
       </div>
-
       <div class="contact-links fade-in fade-in-delay-1">
         <a href="mailto:amangopisetti@gmail.com" class="contact-link">
-          <span class="contact-link-icon">✉️</span>
-          <div class="contact-link-body">
-            <div class="contact-link-label">Email</div>
-            <div class="contact-link-value">amangopisetti@gmail.com</div>
+          <div class="contact-link-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           </div>
+          <div><div class="contact-link-label">Email</div><div class="contact-link-value">amangopisetti@gmail.com</div></div>
         </a>
         <a href="https://linkedin.com/in/saiamangopisetti" target="_blank" class="contact-link">
-          <span class="contact-link-icon">💼</span>
-          <div class="contact-link-body">
-            <div class="contact-link-label">LinkedIn</div>
-            <div class="contact-link-value">linkedin.com/in/saiamangopisetti</div>
+          <div class="contact-link-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
           </div>
+          <div><div class="contact-link-label">LinkedIn</div><div class="contact-link-value">linkedin.com/in/saiamangopisetti</div></div>
         </a>
         <a href="https://patents.google.com/patent/US12308433" target="_blank" class="contact-link">
-          <span class="contact-link-icon">⚖️</span>
-          <div class="contact-link-body">
-            <div class="contact-link-label">Published Patent</div>
-            <div class="contact-link-value">US Patent No. 12,308,433</div>
+          <div class="contact-link-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
           </div>
+          <div><div class="contact-link-label">Published Patent</div><div class="contact-link-value">US Patent No. 12,308,433</div></div>
         </a>
-        <!-- RESUME LINK: Replace href with your actual resume PDF path once uploaded -->
         <a href="resume.pdf" class="contact-link">
-          <span class="contact-link-icon">📄</span>
-          <div class="contact-link-body">
-            <div class="contact-link-label">Resume</div>
-            <div class="contact-link-value">Download PDF →</div>
+          <div class="contact-link-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
           </div>
+          <div><div class="contact-link-label">Resume</div><div class="contact-link-value">Download PDF →</div></div>
         </a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <span class="footer-left">© 2026 Sai Aman Gopisetti</span>
   <span class="footer-right">Battery Materials Engineer · Chicago, IL</span>
 </footer>
 
 <script>
-  // Scroll-triggered fade-in
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
+// PARTICLE BACKGROUND
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d');
+let W, H, particles;
+const COUNT = 48, MAX_DIST = 140;
+
+function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+
+function init() {
+  particles = Array.from({length: COUNT}, () => ({
+    x: Math.random() * W, y: Math.random() * H,
+    vx: (Math.random() - 0.5) * 0.28,
+    vy: (Math.random() - 0.5) * 0.28,
+    r: Math.random() * 1.4 + 0.5
+  }));
+}
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  for (let i = 0; i < particles.length; i++) {
+    const p = particles[i];
+    p.x += p.vx; p.y += p.vy;
+    if (p.x < 0 || p.x > W) p.vx *= -1;
+    if (p.y < 0 || p.y > H) p.vy *= -1;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(232,152,30,0.7)';
+    ctx.fill();
+    for (let j = i + 1; j < particles.length; j++) {
+      const q = particles[j];
+      const dx = p.x - q.x, dy = p.y - q.y;
+      const d = Math.sqrt(dx*dx + dy*dy);
+      if (d < MAX_DIST) {
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
+        ctx.strokeStyle = `rgba(232,152,30,${(1 - d/MAX_DIST) * 0.16})`;
+        ctx.lineWidth = 0.6; ctx.stroke();
       }
-    });
-  }, { threshold: 0.12 });
+    }
+  }
+  requestAnimationFrame(draw);
+}
 
-  document.querySelectorAll('.fade-in').forEach(el => {
-    observer.observe(el);
-  });
+resize(); init(); draw();
+window.addEventListener('resize', () => { resize(); init(); });
 
-  // Trigger hero elements immediately
-  document.querySelectorAll('#hero .fade-in').forEach(el => {
-    setTimeout(() => el.classList.add('visible'), 100);
+// TYPED TEXT
+const full = 'I build carbon-based anode materials for Li-ion batteries \u2014 from formulation through cell-level validation \u2014 and turn that work into IP. Named inventor, U.S.\u00a0Patent\u00a0No.\u00a012,308,433.';
+const el = document.getElementById('typed-text');
+const cursor = document.getElementById('typed-cursor');
+let idx = 0;
+
+function type() {
+  if (idx <= full.length) {
+    el.textContent = full.slice(0, idx++);
+    setTimeout(type, idx < 8 ? 90 : 20);
+  } else {
+    setTimeout(() => cursor.style.display = 'none', 2000);
+  }
+}
+setTimeout(type, 800);
+
+// SCROLL FADE
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+setTimeout(() => document.querySelectorAll('#hero .fade-in').forEach(el => el.classList.add('visible')), 100);
+
+// COUNTING STATS
+function countUp(el) {
+  const target = parseFloat(el.dataset.target);
+  const suffix = el.dataset.suffix || '';
+  const dur = 1800, start = performance.now();
+  (function tick(now) {
+    const t = Math.min((now - start) / dur, 1);
+    const ease = 1 - Math.pow(1 - t, 3);
+    el.textContent = Math.floor(ease * target) + suffix;
+    if (t < 1) requestAnimationFrame(tick);
+    else el.textContent = target + suffix;
+  })(performance.now());
+}
+
+const statObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { countUp(e.target); statObs.unobserve(e.target); }
   });
-  document.querySelectorAll('.stats-strip .fade-in').forEach(el => {
-    setTimeout(() => el.classList.add('visible'), 200);
-  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.stat-number[data-target]').forEach(el => statObs.observe(el));
 </script>
 </body>
 </html>
